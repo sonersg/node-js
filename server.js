@@ -5,6 +5,7 @@ console.log(global);
 const os = require("os");
 const path = require("path");
 const { add, subtract, multiply, divide } = require("./math");
+// require("./math");
 
 console.log(add(23, 7));
 
