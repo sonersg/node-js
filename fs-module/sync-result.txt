@@ -1,0 +1,3 @@
+sync-result text file
+if it doesn't exist, new file will be created in this directory, this is first text file sdlkskdsal
+-this is second text file
