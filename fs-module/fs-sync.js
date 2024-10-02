@@ -1,3 +1,6 @@
+// sync events work step by step and it doesn't go to next step until the current step completed
+// async events don't wait to go next step
+
 const fs = require("fs");
 
 const first = fs.readFileSync("./first.txt", "utf8");

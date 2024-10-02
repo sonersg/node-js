@@ -1,3 +1,6 @@
+// sync events work step by step and it doesn't go to next step until the current step completed
+// async events don't wait to go next step
+
 const { readFile, writeFile } = require("fs");
 
 console.log("start");

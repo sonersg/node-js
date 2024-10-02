@@ -16,7 +16,9 @@ node server
 
 ---
 
-browser.js and node.js
+- browser.js and node.js
+- // sync events work step by step and it doesn't go to next step until the current step completed
+  // async events don't wait to go next step
 
 ---
 
