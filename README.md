@@ -48,3 +48,10 @@ npm i nodemon --save-dev
 - **npm init -y** command sets everything to default while initialization
 - devDepency is used only for the dependecies while developing the app
 - 1.0.0 => major changes . minor changes . bug fixes
+
+## event loops
+
+- offloading the heavy tasks
+- puting the heavy tasks at the end ? or executing the heavy tasks latest ?
+- setTimeout, setinterval... are asynchronous
+- async events get offloaded, they run latest
