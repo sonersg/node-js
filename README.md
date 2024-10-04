@@ -60,3 +60,7 @@ npm i nodemon --save-dev
 
 - on - listen for an event
 - emit - emit an event
+
+## express
+
+- express is built on top of node, on top of http module
