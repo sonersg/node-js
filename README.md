@@ -55,3 +55,8 @@ npm i nodemon --save-dev
 - puting the heavy tasks at the end ? or executing the heavy tasks latest ?
 - setTimeout, setinterval... are asynchronous
 - async events get offloaded, they run latest
+
+## event emitter
+
+- on - listen for an event
+- emit - emit an event
