@@ -54,7 +54,7 @@
 
 // server.listen(5555);
 
-// **********************************************************
+// // *************************************************************************
 
 // // EXPRESS EXAMPLE 1
 
@@ -89,7 +89,7 @@
 // // app.use()
 // // app.listen()
 
-// // **********************************************************
+// // *************************************************************************
 
 // // // EXPRESS EXAMPLE 2
 
@@ -120,7 +120,7 @@
 // // app.use()
 // // app.listen()
 
-// // **********************************************************
+// // *************************************************************************
 
 // // // EXPRESS EXAMPLE 3 - SENDING JSON DATA
 
@@ -139,47 +139,82 @@
 //   console.log("Server is listening on port 5555...");
 // });
 
-// // **********************************************************
+// // *************************************************************************
 
 // // // EXPRESS EXAMPLE 4
 
-const express = require("express");
+// const express = require("express");
 
-const { products } = require("./data.js");
+// const { products } = require("./data.js");
+
+// const app = express();
+
+// app.get("/", (req, res) => {
+//   res.send(`<h1>Home Page</h1>
+//     <a href="/api/products">products</a>`);
+// });
+
+// app.get("/api/products", (req, res) => {
+//   const newProducts = products.map((product) => {
+//     const { id, name, image } = product;
+//     return { id, name, image };
+//   });
+//   res.json(newProducts);
+// });
+
+// app.get("/api/products/:productID", (req, res) => {
+//   // console.log(req)
+//   // console.log(req.params)
+
+//   const { productID } = req.params;
+
+//   const singletProduct = products.find(
+//     (product) => product.id === Number(productID)
+//   );
+
+//   if (!singletProduct) return res.status(404).send("not found");
+
+//   return res.json(singletProduct);
+// });
+
+// app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
+//   console.log(req.params);
+//   res.send("review id");
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // *************************************************************************
+
+// // // EXPRESS EXAMPLE 5 - QUERY
+
+const express = require("express");
+const { products } = require("./data");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Home Page</h1>
-    <a href="/api/products">products</a>`);
-});
+app.get("/api/query", (req, res) => {
+  // console.log(req.query);
+  const { search, limit } = req.query;
+  let sortedProducts = [...products];
 
-app.get("/api/products", (req, res) => {
-  const newProducts = products.map((product) => {
-    const { id, name, image } = product;
-    return { id, name, image };
-  });
-  res.json(newProducts);
-});
+  if (search) {
+    sortedProducts = sortedProducts.filter((product) =>
+      product.name.startsWith(search)
+    );
+  }
 
-app.get("/api/products/:productID", (req, res) => {
-  // console.log(req)
-  // console.log(req.params)
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit));
+  }
 
-  const { productID } = req.params;
+  if (sortedProducts.length < 1) {
+    return res.status(200).send("item not found");
+  }
 
-  const singletProduct = products.find(
-    (product) => product.id === Number(productID)
-  );
-
-  if (!singletProduct) return res.status(404).send("not found");
-
-  return res.json(singletProduct);
-});
-
-app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
-  console.log(req.params);
-  res.send("review id");
+  res.status(200).send(sortedProducts);
 });
 
 app.listen(5555, () => {
