@@ -1,4 +1,5 @@
 // // WITH HTTP MODULE
+
 // const http = require("http");
 // const fs = require("fs");
 
@@ -123,6 +124,25 @@
 
 // // // EXPRESS EXAMPLE 3 - SENDING JSON DATA
 
+// const express = require("express");
+
+// const { products } = require("./data.js");
+
+// const app = express();
+
+// app.get("/", (req, res) => {
+//   // res.json([{ name: "soner" }, { name: "sKerim" }]);
+//   res.json(products);
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // **********************************************************
+
+// // // EXPRESS EXAMPLE 4
+
 const express = require("express");
 
 const { products } = require("./data.js");
@@ -130,8 +150,36 @@ const { products } = require("./data.js");
 const app = express();
 
 app.get("/", (req, res) => {
-  // res.json([{ name: "soner" }, { name: "sKerim" }]);
-  res.json(products);
+  res.send(`<h1>Home Page</h1>
+    <a href="/api/products">products</a>`);
+});
+
+app.get("/api/products", (req, res) => {
+  const newProducts = products.map((product) => {
+    const { id, name, image } = product;
+    return { id, name, image };
+  });
+  res.json(newProducts);
+});
+
+app.get("/api/products/:productID", (req, res) => {
+  // console.log(req)
+  // console.log(req.params)
+
+  const { productID } = req.params;
+
+  const singletProduct = products.find(
+    (product) => product.id === Number(productID)
+  );
+
+  if (!singletProduct) return res.status(404).send("not found");
+
+  return res.json(singletProduct);
+});
+
+app.get("/api/products/:productID/reviews/:reviewID", (req, res) => {
+  console.log(req.params);
+  res.send("review id");
 });
 
 app.listen(5555, () => {
