@@ -57,22 +57,53 @@
 
 // // EXPRESS EXAMPLE 1
 
+// const express = require("express");
+
+// const app = express();
+
+// app.get("/", (req, res) => {
+//   console.log("user hit the home page");
+//   res.send("Home Page");
+// });
+
+// app.get("/about", (req, res) => {
+//   console.log("user hit the about page");
+//   res.send("About Page");
+// });
+
+// app.all("*", (req, res) => {
+//   console.log("not found page");
+//   res.status(404).send("resouce not found");
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // app.get()
+// // app.post()
+// // app.put()
+// // app.delete()
+// // app.all()
+// // app.use()
+// // app.listen()
+
+// **********************************************************
+
+// // EXPRESS EXAMPLE 2
+
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  console.log("user hit the home page");
-  res.send("Home Page");
-});
+app.use(express.static("./public")); // sets up static and middleware
 
-app.get("/about", (req, res) => {
-  console.log("user hit the about page");
-  res.send("About Page");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
+// });
 
 app.all("*", (req, res) => {
-  console.log("not found page");
   res.status(404).send("resouce not found");
 });
 
