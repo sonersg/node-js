@@ -190,31 +190,106 @@
 
 // // // EXPRESS EXAMPLE 5 - QUERY
 
+// const express = require("express");
+// const { products } = require("./data");
+
+// const app = express();
+
+// app.get("/api/query", (req, res) => {
+//   // console.log(req.query);
+//   const { search, limit } = req.query;
+//   let sortedProducts = [...products];
+
+//   if (search) {
+//     sortedProducts = sortedProducts.filter((product) =>
+//       product.name.startsWith(search)
+//     );
+//   }
+
+//   if (limit) {
+//     sortedProducts = sortedProducts.slice(0, Number(limit));
+//   }
+
+//   if (sortedProducts.length < 1) {
+//     return res.status(200).send("item not found");
+//   }
+
+//   res.status(200).send(sortedProducts);
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // *************************************************************************
+
+// // // EXPRESS MIDDLEWARE 1
+
+// // req => middleware => res
+
+// const express = require("express");
+
+// const app = express();
+
+// const logger = (res, req, next) => {
+//   const method = req.method;
+//   const url = req.url;
+//   const date = new Date().getFullYear();
+//   console.log(method, url, date);
+//   next();
+// };
+
+// app.get("/", logger, (req, res) => {
+//   res.send("home");
+// });
+
+// app.get("/about", (req, res) => {
+//   res.send("about");
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // *************************************************************************
+
+// // // EXPRESS MIDDLEWARE 2
+
+// // req => middleware => res
+
 const express = require("express");
-const { products } = require("./data");
 
 const app = express();
 
-app.get("/api/query", (req, res) => {
-  // console.log(req.query);
-  const { search, limit } = req.query;
-  let sortedProducts = [...products];
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  const date = new Date().getFullYear();
+  console.log(method, url, date);
+  next();
+};
 
-  if (search) {
-    sortedProducts = sortedProducts.filter((product) =>
-      product.name.startsWith(search)
-    );
+const authorize = (req, res, next) => {
+  const { user } = req.query;
+  if (user === "soner") {
+    req.user = { name: "soner", id: 1 };
+    next();
+    console.log("authorize");
+  } else {
+    res.status(401).send("unauthorized");
   }
+};
 
-  if (limit) {
-    sortedProducts = sortedProducts.slice(0, Number(limit));
-  }
+// app.use(logger)
+app.use([logger, authorize]);
 
-  if (sortedProducts.length < 1) {
-    return res.status(200).send("item not found");
-  }
+app.get("/", (req, res) => {
+  res.send("home");
+});
 
-  res.status(200).send(sortedProducts);
+app.get("/about", (req, res) => {
+  console.log(req.user);
+  res.send("about");
 });
 
 app.listen(5555, () => {

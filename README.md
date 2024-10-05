@@ -64,3 +64,5 @@ npm i nodemon --save-dev
 ## express
 
 - express is built on top of node, on top of http module
+
+- req => middleware => res
