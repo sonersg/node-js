@@ -88,33 +88,52 @@
 // // app.use()
 // // app.listen()
 
-// **********************************************************
+// // **********************************************************
 
-// // EXPRESS EXAMPLE 2
+// // // EXPRESS EXAMPLE 2
+
+// const express = require("express");
+// const path = require("path");
+
+// const app = express();
+
+// app.use(express.static("./public")); // sets up static and middleware
+
+// // app.get("/", (req, res) => {
+// //   res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
+// // });
+
+// app.all("*", (req, res) => {
+//   res.status(404).send("resouce not found");
+// });
+
+// app.listen(5555, () => {
+//   console.log("Server is listening on port 5555...");
+// });
+
+// // app.get()
+// // app.post()
+// // app.put()
+// // app.delete()
+// // app.all()
+// // app.use()
+// // app.listen()
+
+// // **********************************************************
+
+// // // EXPRESS EXAMPLE 3 - SENDING JSON DATA
 
 const express = require("express");
-const path = require("path");
+
+const { products } = require("./data.js");
 
 const app = express();
 
-app.use(express.static("./public")); // sets up static and middleware
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
-// });
-
-app.all("*", (req, res) => {
-  res.status(404).send("resouce not found");
+app.get("/", (req, res) => {
+  // res.json([{ name: "soner" }, { name: "sKerim" }]);
+  res.json(products);
 });
 
 app.listen(5555, () => {
   console.log("Server is listening on port 5555...");
 });
-
-// app.get()
-// app.post()
-// app.put()
-// app.delete()
-// app.all()
-// app.use()
-// app.listen()
